@@ -34,6 +34,7 @@ var _phase := 0.0
 var _hands_busy := false
 var _highlight := false
 var _mask_light: OmniLight3D
+var _area: Area3D
 
 func setup(i: int, pname: String, color: Color, human: bool, angle: float) -> void:
 	index = i
@@ -81,8 +82,8 @@ func _build() -> void:
 		mask_pivot.add_child(s)
 		_life_mats.append(m)
 		_life_nodes.append(s)
-	var a := Models.area(0.2, "player", self, Vector3(0, -0.05, 0))
-	mask_pivot.add_child(a)
+	_area = Models.area(0.2, "player", self, Vector3(0, -0.05, 0))
+	mask_pivot.add_child(_area)
 	hand_l = _make_hand(false)
 	hand_r = _make_hand(true)
 	hand_l.position = hand_rest_l
@@ -229,3 +230,8 @@ func eliminate() -> void:
 	mask_pivot.visible = false
 	hand_l.visible = false
 	hand_r.visible = false
+
+## The seat camera sits inside its own mask; hide it and stop it eating clicks.
+func set_first_person(on: bool) -> void:
+	mask_pivot.visible = not on and not eliminated
+	_area.collision_layer = 0 if on else 1

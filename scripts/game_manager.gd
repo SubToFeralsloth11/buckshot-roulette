@@ -555,10 +555,10 @@ func set_viewer(p: Player, dur := 0.9) -> void:
 	if viewer == p:
 		return
 	if viewer and not viewer.eliminated:
-		viewer.mask_pivot.visible = true
+		viewer.set_first_person(false)
 	var hotseat := viewer != null
 	viewer = p
-	p.mask_pivot.visible = false
+	p.set_first_person(true)
 	var d := Vector3(p.position.x, 0, p.position.z).normalized()
 	cam.set_home(d * 1.72 + Vector3(0, 1.42, 0), Vector3(0, Player.TABLE_Y, 0) - d * 0.15, dur)
 	hud.set_known(viewer, shells)
