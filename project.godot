@@ -28,3 +28,10 @@ window/stretch/aspect="expand"
 [rendering]
 
 anti_aliasing/quality/msaa_3d=2
+
+[display.window]
+handheld/orientation=0
+
+[rendering.renderer]
+rendering_method.web="gl_compatibility"
+rendering_method.mobile="gl_compatibility"

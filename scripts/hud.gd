@@ -66,6 +66,11 @@ func _ready() -> void:
 	_game_ui.visible = false
 	add_child(_game_ui)
 
+	var pause_btn := _button("II", toggle_pause)
+	pause_btn.custom_minimum_size = Vector2(64, 64)
+	pause_btn.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_SIZE, 16)
+	_game_ui.add_child(pause_btn)
+
 	var lives_box := VBoxContainer.new()
 	lives_box.name = "Lives"
 	lives_box.position = Vector2(24, 20)
@@ -185,7 +190,8 @@ func _ready() -> void:
 	tv.add_child(_button("HOT-SEAT  (2 players + 2 bots)", func(): start_requested.emit(2)))
 	tv.add_child(_button("HOT-SEAT  (4 players)", func(): start_requested.emit(4)))
 	tv.add_child(_button("WATCH  (4 bots)", func(): start_requested.emit(0)))
-	tv.add_child(_button("QUIT", func(): get_tree().quit()))
+	if not OS.has_feature("web"):
+		tv.add_child(_button("QUIT", func(): get_tree().quit()))
 	_title.visible = false
 
 	_pause = _screen(Color(0, 0, 0, 0.7))
